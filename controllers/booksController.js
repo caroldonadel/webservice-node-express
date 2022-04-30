@@ -22,7 +22,13 @@ function booksController(Book) {
       if (err) {
         return res.send(err);
       }
-      res.json(books);
+
+      const returnBooks = books.map((book) => {
+        const newBook = book.toJSON();
+        newBook.links = {};
+        newBook.links.self = `http://${req.headers.host}/api/books/${book._id}`;
+      });
+      return res.json(returnBooks);
     });
   }
 
