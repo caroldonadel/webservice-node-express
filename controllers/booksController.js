@@ -2,8 +2,14 @@ function booksController(Book) {
   function post(req, res) {
     const book = new Book(req.body);
 
+    if (!req.body.title) {
+      res.status(400);
+      return res.send("Title is required");
+    }
+
     book.save();
-    return res.status(201).json(req.book);
+    res.status(201);
+    return res.json(req.book);
   }
 
   function get(req, res) {
